@@ -1,0 +1,9 @@
+Chạy cronjob 08:00AM
+
+cleandb_14days_app.sh
+
+- Lệnh thực thi:
+
+  + Tìm và liệt kê các backup filestore cũ hơn 1day --> delete
+  + Delete các backup cũ hơn 14 days
+  + Ghi log vào /data/cleandb_history_app.txt

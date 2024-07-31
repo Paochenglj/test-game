@@ -1,0 +1,19 @@
+#!/bin/bash
+
+LOG_FILE="/data/cleandb_history_uat.txt"
+
+# Xóa các file backup cũ hơn 14 ngày và ghi log
+echo "$(date): Start backup cleanup" >> $LOG_FILE
+
+find /data/backup -name "*.dump.gz" -type f -mtime +13 -print -exec rm {} \; >> $LOG_FILE 2>&1
+echo "" >> $LOG_FILE
+
+# Ghi log các file được giữ lại
+echo "$(date): Backups kept:" >> $LOG_FILE
+
+# Sắp xếp các file giữ lại theo thứ tự ngày tháng năm và ghi log
+find /data/backup -name "*.dump.gz" -type f -mtime -14 -print0 | xargs -0 ls -ltr >> $LOG_FILE
+echo "" >> $LOG_FILE
+
+echo "$(date): Backup cleanup completed" >> $LOG_FILE
+echo "" >> $LOG_FILE

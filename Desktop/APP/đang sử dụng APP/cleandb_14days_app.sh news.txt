@@ -1,0 +1,22 @@
+#!/bin/bash
+
+LOG_FILE="/data/cleandb_history_app.txt"
+
+# Ghi log bắt đầu dọn dẹp backup filestore
+echo "$(date): Bắt đầu dọn dẹp backup filestore" > $LOG_FILE
+
+# Tìm và liệt kê các filestore backup cũ hơn 1 ngày, sau đó xóa chúng
+find /data/backup -name "aldovn_prod_filestore_*" -type d -mtime +0 -print -exec sudo rm -rf {} \; >> $LOG_FILE 2>&1
+echo "" >> $LOG_FILE
+
+# Ghi log hoàn thành dọn dẹp
+echo "$(date): Hoàn thành dọn dẹp backup filestore" >> $LOG_FILE
+echo "" >> $LOG_FILE
+
+# Xóa các backup cũ hơn 14 ngày
+find /data/backup -name "aldo_vn_prod_*" -type f -mtime +14 -exec rm {} \; >> $LOG_FILE 2>&1
+echo "" >> $LOG_FILE
+
+# Ghi log
+echo "$(date): Hoàn thành dọn dẹp backup" >> $LOG_FILE
+echo "" >> $LOG_FILE

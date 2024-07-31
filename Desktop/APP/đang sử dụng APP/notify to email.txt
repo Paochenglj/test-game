@@ -1,0 +1,17 @@
+#!/bin/bash
+
+# Địa chỉ email nhận thông báo
+EMAIL="sang.le@vtijs.com"
+
+# Ngưỡng dung lượng còn lại (10GB)
+THRESHOLD=10000000
+
+# Kiểm tra dung lượng còn lại trên phân vùng gốc
+AVAILABLE=$(df / | grep / | awk '{ print $4 }')
+
+if [ $AVAILABLE -lt $THRESHOLD ]; then
+    echo "Cảnh báo: Dung lượng còn lại dưới 10GB. Còn lại $(($AVAILABLE / 1024)) MB" | mail -s "Cảnh báo dung lượng bộ nhớ" $EMAIL
+fi
+
+# Thông báo tình trạng bộ nhớ hiện tại
+df -h | mail -s "Báo cáo tình trạng bộ nhớ" $EMAIL
